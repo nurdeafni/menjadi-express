@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true})); // menangkap type request dalam bentuk from urlencoded
 app.use(bodyParser.json()); // menangkap url dalam bentuk json
 
-const Mongoose = require('./mongoModel/MongoConfig')
+const Mongoose = require('./mongoModel/MongoConfig') // memanggil MongoConfig.js
 const PersonModel = Mongoose.model('person',{
     firstName: String,
     lastName: String
@@ -18,14 +18,20 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 //membuat request post
 // nama request firstName, lastName
-app.post('/helo',function (req,res){
-    const respon ={
+app.post('/profile',async (req,res)=>{
+    const insert={
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    }
+    var person = new PersonModel(insert);
+    var result = await person.save();
+    const response ={
         statusCode : 200,
         error :'',
-        message: 'hello json',
-        content: req.body
+        message: 'create success',
+        content: result
     }
-    res.json(respon);
+    res.json(response);
 })
 
 // commit lagi dengan nama "membuat request post"

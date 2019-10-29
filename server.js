@@ -76,6 +76,21 @@ app.put('/profile/update/(:id)', async (req,res) =>{
     res.status(statusCode).json(response);
 })
 
+//Delete data methode get
+// url http://localhost:3000/profile/delete/id
+app.get('./profile/delete/(:id)', async (req, res) =>{
+    let statusCode= 200
+    let message ='Delet Person'
+    var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+    const response= {
+        statusCode : statusCode,
+        error: message,
+        message: message,
+        content: person
+    }
+    res.status(statusCode).json(response);
+})
+
 
 // commit lagi dengan nama "membuat request post"
 app.listen(port, () => console.log (`Example app Listening on port ${port}!` ))

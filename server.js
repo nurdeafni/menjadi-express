@@ -45,6 +45,19 @@ app.get('/profile/list', async (req,res) =>{
     }
     res.json(response);
 })
+app.get('/profile/detail/{id}', async (req,res) =>{
+    let statusCode= 200
+    let message='Detail Person'
+    var person = await PersonModel.findById(req.params.id).exec();
+    const response= {
+        statusCode: 200,
+        error: message,
+        message: message,
+        content: person
+    }
+    res.status(statusCode).json(response);
+})
+
 
 // commit lagi dengan nama "membuat request post"
 app.listen(port, () => console.log (`Example app Listening on port ${port}!` ))

@@ -78,7 +78,7 @@ app.put('/profile/update/(:id)', async (req,res) =>{
 
 //Delete data methode get
 // url http://localhost:3000/profile/delete/id
-app.get('./profile/delete/(:id)', async (req, res) =>{
+app.get('/profile/delete/(:id)', async (req, res) =>{
     let statusCode= 200
     let message ='Delet Person'
     var person = await PersonModel.findByIdAndDelete(req.params.id).exec();

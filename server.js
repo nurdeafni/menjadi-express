@@ -7,10 +7,17 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true})); // menangkap type request dalam bentuk from urlencoded
 app.use(bodyParser.json()); // menangkap url dalam bentuk json
 
+const Mongoose = require('./mongoModel/MongoConfig')
+const PersonModel = Mongoose.model('person',{
+    firstName: String,
+    lastName: String
+})
+
 app.get('/', (req, res) => res.send('Hello World!')) 
 // run aplikasi
 
 //membuat request post
+// nama request firstName, lastName
 app.post('/helo',function (req,res){
     const respon ={
         statusCode : 200,

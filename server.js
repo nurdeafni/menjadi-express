@@ -28,8 +28,20 @@ app.post('/profile',async (req,res)=>{
     const response ={
         statusCode : 200,
         error :'',
-        message: 'create success',
+        message: 'create person',
         content: result
+    }
+    res.json(response);
+})
+//menampilkan semua data
+//url http://localhost:3000/profile/list
+app.get('/profile/list', async (req,res) =>{
+    //Do something here
+    var person = await PersonModel.find().exec();
+    const response= {
+        statusCode: 200,
+        error: '',
+        content: person
     }
     res.json(response);
 })

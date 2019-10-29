@@ -19,6 +19,7 @@ app.get('/', (req, res) => res.send('Hello World!'))
 //membuat request post
 // nama request firstName, lastName
 app.post('/profile',async (req,res)=>{
+    
     const insert={
         firstName: req.body.firstName,
         lastName: req.body.lastName
@@ -78,10 +79,32 @@ app.put('/profile/update/(:id)', async (req,res) =>{
 
 //Delete data methode get
 // url http://localhost:3000/profile/delete/id
+// app.get('/profile/delete/(:id)', async (req, res) =>{
+//     let statusCode= 200
+//     let message ='Delet Person'
+//     var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+//     const response= {
+//         statusCode : statusCode,
+//         error: message,
+//         message: message,
+//         content: person
+//     }
+//     res.status(statusCode).json(response);
+// })
+//Validasi Delete data methode get
+// url http://localhost:3000/profile/delete/id
 app.get('/profile/delete/(:id)', async (req, res) =>{
-    let statusCode= 200
+    const checkId = Mongoose.Types.ObjectId.isValid(req.params.id)
+    //check dataobject id valid jika valid lakukan eksekusi delete
+    let statusCode = 200
     let message ='Delet Person'
-    var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+    if(checkId){// jika id valid delete data
+        var person= await PersonModel.findByIdAndDelete(req.params.id).exec();
+    }else{
+        statusCode= 404
+        message ='Object Id Invalid'
+        var person= null;
+    }
     const response= {
         statusCode : statusCode,
         error: message,
@@ -90,7 +113,6 @@ app.get('/profile/delete/(:id)', async (req, res) =>{
     }
     res.status(statusCode).json(response);
 })
-
 
 // commit lagi dengan nama "membuat request post"
 app.listen(port, () => console.log (`Example app Listening on port ${port}!` ))

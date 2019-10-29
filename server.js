@@ -7,6 +7,11 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true})); // menangkap type request dalam bentuk from urlencoded
 app.use(bodyParser.json()); // menangkap url dalam bentuk json
 
+//panggil library route
+var router = express.Router();
+//Panggil model
+const Models= require('../myapp/models/index')
+
 const Mongoose = require('./mongoModel/MongoConfig') // memanggil MongoConfig.js
 const PersonModel = Mongoose.model('person',{
     firstName: String,
@@ -93,20 +98,6 @@ app.put('/profile/update/(:id)', async (req,res) =>{
     res.status(statusCode).json(response);
 })
 
-//Delete data methode get
-// url http://localhost:3000/profile/delete/id
-// app.get('/profile/delete/(:id)', async (req, res) =>{
-//     let statusCode= 200
-//     let message ='Delet Person'
-//     var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
-//     const response= {
-//         statusCode : statusCode,
-//         error: message,
-//         message: message,
-//         content: person
-//     }
-//     res.status(statusCode).json(response);
-// })
 //Validasi Delete data methode get
 // url http://localhost:3000/profile/delete/id
 app.get('/profile/delete/(:id)', async (req, res) =>{
@@ -129,6 +120,10 @@ app.get('/profile/delete/(:id)', async (req, res) =>{
     }
     res.status(statusCode).json(response);
 })
+
+//membuat route
+var todoRoute = require('./routes/todoRoutes');
+app.use('/todo', todoRoute);
 
 // commit lagi dengan nama "membuat request post"
 app.listen(port, () => console.log (`Example app Listening on port ${port}!` ))

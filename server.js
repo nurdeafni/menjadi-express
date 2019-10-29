@@ -16,6 +16,7 @@ app.post('/helo',function (req,res){
         statusCode : 200,
         error :'',
         message: 'hello json',
+        content: req.body
     }
     res.json(respon);
 })

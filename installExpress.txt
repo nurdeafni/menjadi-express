@@ -1,0 +1,10 @@
+install express
+bikin folder di dalam folder
+=> npm init --yes
+=> npm i express --save
+install nodemon
+=> npm install -g nodemon
+
+install body parser untuk libary
+=> npm i body-parser
+

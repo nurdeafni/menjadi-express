@@ -19,7 +19,15 @@ app.get('/', (req, res) => res.send('Hello World!'))
 //membuat request post
 // nama request firstName, lastName
 app.post('/profile',async (req,res)=>{
-    
+    //Di something here
+    console.log(req.body)
+    if(!req.body.firstName){
+        res.status(400).json({
+            statusCode: 400,
+            error: 'firstName parameter is required',
+            message: 'firstName parameter is required'
+        });
+    }
     const insert={
         firstName: req.body.firstName,
         lastName: req.body.lastName

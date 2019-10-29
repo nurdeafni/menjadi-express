@@ -27,21 +27,29 @@ app.post('/profile',async (req,res)=>{
             error: 'firstName parameter is required',
             message: 'firstName parameter is required'
         });
+    } else if(!req.body.lastName){
+        res.status(400).json({
+            statusCode: 400,
+            error: 'lastName parameter is required',
+            message: 'lastName parameter is required'
+        });
+    } else {
+        const insert={
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        }
+        var person = new PersonModel(insert);
+        var result = await person.save();
+        const response ={
+            statusCode : 200,
+            error :'',
+            message: 'create person',
+            content: result
+        }
+        res.json(response);
     }
-    const insert={
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
-    }
-    var person = new PersonModel(insert);
-    var result = await person.save();
-    const response ={
-        statusCode : 200,
-        error :'',
-        message: 'create person',
-        content: result
-    }
-    res.json(response);
 })
+   
 //menampilkan semua data
 //url http://localhost:3000/profile/list
 app.get('/profile/list', async (req,res) =>{
